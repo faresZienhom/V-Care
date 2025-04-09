@@ -3,9 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class DoctorTitleRequest extends FormRequest
+class SpecialityRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,13 +21,11 @@ class DoctorTitleRequest extends FormRequest
      */
     public function rules(): array
     {
+
+        $specialityId = $this->route()->specialities->id ?? null;
+
         return [
-            'doctor_name' => [
-                'required',
-                'min:3',
-                'max:50',
-                Rule::unique('doctor_titles','name')->ignore($this->route('title')?->id, 'id')
-            ]
+            'speciality_name' => 'required|min:3|max:100|unique:specialities,name,' . $specialityId,
         ];
     }
 }

@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Country;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class DoctorTitleRequest extends FormRequest
+class CountryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,13 +22,11 @@ class DoctorTitleRequest extends FormRequest
      */
     public function rules(): array
     {
+
+        $countryId = $this->route()->countries->id ?? null;
+
         return [
-            'doctor_name' => [
-                'required',
-                'min:3',
-                'max:50',
-                Rule::unique('doctor_titles','name')->ignore($this->route('title')?->id, 'id')
-            ]
+            'country_name' => 'required|min:3|max:100|unique:countries,name,' . $countryId,
         ];
     }
 }
