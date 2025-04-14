@@ -6,20 +6,27 @@ use App\ApiResponse;
 use App\Http\Requests\DoctorTitleRequest;
 use App\Http\Resources\DoctorTitleResource;
 use App\Models\DoctorTitle;
+use App\Services\DoctorTitleService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 
 class DoctorTitleController extends Controller
 {
     use ApiResponse;
-    public function index(){
-        $titles= DoctorTitle::get();
-        // return response()->json(['titles'=>DoctorTitleResource::collection($titles)]);
-        // return response()->success(DoctorTitleResource::collection($titles));
-        // return Response::success(DoctorTitleResource::collection($titles));
-        return $this->successResponse(DoctorTitleResource::collection($titles));
-
+    public function __construct(public DoctorTitleService $service) {
     }
+    function index() {
+        return $this->successResponse(DoctorTitleResource::collection($this->service->index()));
+    }
+
+    // public function index(){
+    //     $titles= DoctorTitle::get();
+    //     // return response()->json(['titles'=>DoctorTitleResource::collection($titles)]);
+    //     // return response()->success(DoctorTitleResource::collection($titles));
+    //     // return Response::success(DoctorTitleResource::collection($titles));
+    //     return $this->successResponse(DoctorTitleResource::collection($titles));
+
+    // }
 
     function show(DoctorTitle $title) {
         return response()->json(['data' => new DoctorTitleResource($title)]);
