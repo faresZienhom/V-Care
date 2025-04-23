@@ -5,7 +5,7 @@ namespace App\Providers;
 use App\Faker\DoctorTitleProvider;
 use App\Faker\SpecialityProvider;
 use App\Repositories\DoctorTitleRepository;
-use App\Repositories\Interfaces\DoctorTitleInterface;
+use App\Repositories\interfaces\DoctorTitleInterface;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\ServiceProvider;
 

@@ -2,16 +2,18 @@
 
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\DoctorTitleController;
+use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\SpecialityController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Laravel\Sanctum\Sanctum;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
 
-Route::controller(DoctorTitleController::class)->prefix('doctor_title')->group(function(){
+Route::controller(DoctorTitleController::class)->middleware('auth:sanctum')->prefix('doctor_title')->group(function(){
     Route::get('/', 'index');
     Route::get('/{title}', 'show');
     Route::post('/', 'store');
@@ -29,6 +31,7 @@ Route::controller(CountryController::class)->prefix('countries')->group(function
 
 
 
+
 Route::controller(SpecialityController::class)->prefix('specialities')->group(function () {
     Route::get('/', 'index');
     Route::get('/{speciality}', 'show');
@@ -37,6 +40,7 @@ Route::controller(SpecialityController::class)->prefix('specialities')->group(fu
     Route::delete('/{speciality}', 'destroy');
 });
 
+Route::post('register',[RegisteredUserController::class,'store']);
 
 /*********   home page api's */
 // search api for doctor (speciality_name,city_name)  or (doctor_name)
