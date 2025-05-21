@@ -13,6 +13,17 @@ class DoctorTitleSeeder extends Seeder
      */
     public function run(): void
     {
-        DoctorTitle::factory(5)->create();
+        $titles =  [
+            'Intern',
+            'Resident',
+            'Registrar',
+            'Specialist',
+            'Consultant',
+            'Attending Physician',
+            'Fellow',
+        ];
+        foreach ($titles as $title) {
+            DoctorTitle::firstOrCreate(['name' => $title]);
+        }
     }
 }
